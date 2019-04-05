@@ -98,7 +98,7 @@ public class AopHelper {
         new Thread() {
             @Override
             public void run() {
-                List<Class<? extends OnAopExitListener>> listeners = AopUtils.getImplementations(mApp, AopHelper.getInstance().getPkg(), OnAopExitListener.class);
+                List<Class<? extends OnAopExitListener>> listeners = AopUtils.getImplementations(mApp, mPkg, OnAopExitListener.class);
                 if (null != listeners && !listeners.isEmpty()) {
                     mExitListenerList = new ArrayList<>();
                     for (Class<? extends OnAopExitListener> listener : listeners) {

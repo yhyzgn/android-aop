@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.yhy.aop.BuildConfig;
+import com.yhy.aop.AopHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -246,7 +246,7 @@ public class AopUtils {
             }
         }
 
-        if (BuildConfig.DEBUG) {
+        if (AopHelper.getInstance().isDebug()) {
             // 只有debug模式下才启用InstantRun
             sourcePaths.addAll(tryLoadInstantRunDexFile(applicationInfo));
         }
