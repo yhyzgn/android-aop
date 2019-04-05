@@ -46,13 +46,13 @@ public class AopHelper {
     }
 
     public AopHelper init(Application application) {
-        mApp = application;
-        config();
-        return this;
+        return init(application, true);
     }
 
-    public AopHelper debug(boolean debug) {
+    public AopHelper init(Application application, boolean debug) {
+        mApp = application;
         mDebug = debug;
+        config();
         return this;
     }
 

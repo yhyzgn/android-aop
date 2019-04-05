@@ -20,7 +20,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        AopHelper.getInstance().init(this).debug(BuildConfig.DEBUG).logger(new AopHelper.Logger() {
+        AopHelper.getInstance().init(this, BuildConfig.DEBUG).logger(new AopHelper.Logger() {
             @Override
             public void log(String msg) {
                 Log.i("App", msg);
