@@ -1,10 +1,10 @@
-package com.yhy.powerexam.aop.aspectj;
+package com.yhy.aop.aspectj;
 
 import android.app.Activity;
 
-import com.yhy.powerexam.aop.AopHelper;
-import com.yhy.powerexam.aop.annotation.ExitSticker;
-import com.yhy.powerexam.aop.listener.OnAopExitListener;
+import com.yhy.aop.AopHelper;
+import com.yhy.aop.annotation.ExitSticker;
+import com.yhy.aop.listener.OnAopExitListener;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

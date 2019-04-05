@@ -3,8 +3,8 @@ package com.yhy.aop.simple;
 import android.app.Application;
 import android.util.Log;
 
-import com.yhy.powerexam.aop.AopHelper;
-import com.yhy.powerexam.aop.annotation.Aop;
+import com.yhy.aop.AopHelper;
+import com.yhy.aop.annotation.Aop;
 
 /**
  * author : 颜洪毅

@@ -1,4 +1,4 @@
-package com.yhy.powerexam.aop;
+package com.yhy.aop;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.yhy.powerexam.aop.test", appContext.getPackageName());
+        assertEquals("com.yhy.aop.test", appContext.getPackageName());
     }
 }

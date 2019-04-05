@@ -1,4 +1,4 @@
-package com.yhy.powerexam.aop.annotation;
+package com.yhy.aop.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -10,22 +10,20 @@ import java.lang.annotation.Target;
 /**
  * author : 颜洪毅
  * e-mail : yhyzgn@gmail.com
- * time   : 2019-04-05 18:53
+ * time   : 2019-03-25 11:11
  * version: 1.0.0
- * desc   : 开启Aop功能，并配置 Aop相关的 packageName
+ * desc   : 返回退出应用提示
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 @Inherited
 @Documented
-public @interface Aop {
+public @interface ExitSticker {
 
     /**
-     * packageName
-     * <p>
-     * 配置此项能提高Aop效率
+     * 连续返回的有效时间间隔，默认3s
      *
-     * @return packageName
+     * @return 有效时间间隔
      */
-    String value() default "";
+    long value() default 3000;
 }

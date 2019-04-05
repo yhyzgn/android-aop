@@ -2,7 +2,7 @@ package com.yhy.aop.simple;
 
 import android.os.Bundle;
 
-import com.yhy.powerexam.aop.annotation.ExitSticker;
+import com.yhy.aop.annotation.ExitSticker;
 
 import androidx.appcompat.app.AppCompatActivity;
 

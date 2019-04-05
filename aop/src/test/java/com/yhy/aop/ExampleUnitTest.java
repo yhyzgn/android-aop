@@ -1,4 +1,4 @@
-package com.yhy.powerexam.aop;
+package com.yhy.aop;
 
 import org.junit.Test;
 

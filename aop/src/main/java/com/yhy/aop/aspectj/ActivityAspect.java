@@ -1,6 +1,6 @@
-package com.yhy.powerexam.aop.aspectj;
+package com.yhy.aop.aspectj;
 
-import com.yhy.powerexam.aop.AopHelper;
+import com.yhy.aop.AopHelper;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

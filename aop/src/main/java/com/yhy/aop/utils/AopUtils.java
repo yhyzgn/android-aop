@@ -1,4 +1,4 @@
-package com.yhy.powerexam.aop.utils;
+package com.yhy.aop.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.yhy.powerexam.aop.BuildConfig;
+import com.yhy.aop.BuildConfig;
 
 import java.io.File;
 import java.io.IOException;
