@@ -61,9 +61,9 @@ public class AopHelper {
         return this;
     }
 
-    public void log(String msg) {
+    public void log(String msg, Logger.Level level) {
         if (null != mLogger) {
-            mLogger.log(msg);
+            mLogger.log(msg, level);
         }
     }
 
@@ -92,30 +92,30 @@ public class AopHelper {
         // 如果未添加注解，则关闭Aop功能
         if ((mEnabled = null != config)) {
             mPkg = config.value();
-        }
 
-        // 子线程，执行一些耗时操作
-        new Thread() {
-            @Override
-            public void run() {
-                List<Class<? extends OnAopExitListener>> listeners = AopUtils.getImplementations(mApp, mPkg, OnAopExitListener.class);
-                if (null != listeners && !listeners.isEmpty()) {
-                    mExitListenerList = new ArrayList<>();
-                    for (Class<? extends OnAopExitListener> listener : listeners) {
-                        if (listener.isInterface() || Modifier.isAbstract(listener.getModifiers())) {
-                            continue;
-                        }
-                        try {
-                            mExitListenerList.add(listener.newInstance());
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InstantiationException e) {
-                            e.printStackTrace();
+            // 子线程，执行一些耗时操作
+            new Thread() {
+                @Override
+                public void run() {
+                    List<Class<? extends OnAopExitListener>> listeners = AopUtils.getImplementations(mApp, mPkg, OnAopExitListener.class);
+                    if (null != listeners && !listeners.isEmpty()) {
+                        mExitListenerList = new ArrayList<>();
+                        for (Class<? extends OnAopExitListener> listener : listeners) {
+                            if (listener.isInterface() || Modifier.isAbstract(listener.getModifiers())) {
+                                continue;
+                            }
+                            try {
+                                mExitListenerList.add(listener.newInstance());
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            } catch (InstantiationException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
-            }
-        }.start();
+            }.start();
+        }
     }
 
     /**
@@ -128,6 +128,10 @@ public class AopHelper {
          *
          * @param msg 日志信息
          */
-        void log(String msg);
+        void log(String msg, Level level);
+
+        enum Level {
+            INFO, DEBUG, WARN, ERROR
+        }
     }
 }

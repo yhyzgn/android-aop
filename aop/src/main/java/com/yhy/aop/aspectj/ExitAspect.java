@@ -10,6 +10,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -30,6 +31,9 @@ public class ExitAspect {
         if (AopHelper.getInstance().isEnabled()) {
             Object target = point.getTarget();
             if (target instanceof Activity) {
+                if (!hasMethod(target.getClass(), "onBackPressed")) {
+                    AopHelper.getInstance().log("ExitSticker注解的Activity或其父类必须重写onBackPressed方法", AopHelper.Logger.Level.ERROR);
+                }
                 Activity activity = (Activity) target;
                 ExitSticker prevent = activity.getClass().getAnnotation(ExitSticker.class);
                 if (prevent != null && System.currentTimeMillis() - lastTime >= prevent.value()) {
@@ -46,5 +50,17 @@ public class ExitAspect {
         }
         // 允许退出
         point.proceed();
+    }
+
+    private boolean hasMethod(Class<?> clazz, String method) {
+        Method[] methods = clazz.getDeclaredMethods();
+        if (methods.length > 0) {
+            for (Method md : methods) {
+                if (method.equals(md.getName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

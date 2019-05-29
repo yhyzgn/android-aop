@@ -30,7 +30,7 @@ public class ActivityAspect {
             // 允许方法执行
             point.proceed();
         } else {
-            AopHelper.getInstance().log("已阻止Activity重复跳转");
+            AopHelper.getInstance().log("已阻止Activity重复跳转", AopHelper.Logger.Level.INFO);
         }
     }
 }

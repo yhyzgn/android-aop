@@ -22,8 +22,21 @@ public class App extends Application {
 
         AopHelper.getInstance().init(this, BuildConfig.DEBUG).logger(new AopHelper.Logger() {
             @Override
-            public void log(String msg) {
-                Log.i("App", msg);
+            public void log(String msg, Level level) {
+                switch (level) {
+                    case INFO:
+                        Log.i("App", msg);
+                        break;
+                    case DEBUG:
+                        Log.d("App", msg);
+                        break;
+                    case WARN:
+                        Log.w("App", msg);
+                        break;
+                    case ERROR:
+                        Log.e("App", msg);
+                        break;
+                }
             }
         });
     }
