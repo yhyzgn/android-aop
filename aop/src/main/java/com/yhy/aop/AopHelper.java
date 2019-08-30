@@ -2,14 +2,6 @@ package com.yhy.aop;
 
 import android.app.Application;
 
-import com.yhy.aop.annotation.Aop;
-import com.yhy.aop.listener.OnAopExitListener;
-import com.yhy.aop.utils.AopUtils;
-
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * author : 颜洪毅
  * e-mail : yhyzgn@gmail.com
@@ -25,8 +17,6 @@ public class AopHelper {
     private boolean mEnabled;
     private String mPkg;
     private boolean mDebug;
-
-    private List<OnAopExitListener> mExitListenerList;
 
     private AopHelper() {
         if (null != instance) {
@@ -52,7 +42,6 @@ public class AopHelper {
     public AopHelper init(Application application, boolean debug) {
         mApp = application;
         mDebug = debug;
-        config();
         return this;
     }
 
@@ -81,41 +70,6 @@ public class AopHelper {
 
     public boolean isDebug() {
         return mDebug;
-    }
-
-    public List<OnAopExitListener> getExitListenerList() {
-        return mExitListenerList;
-    }
-
-    private void config() {
-        Aop config = mApp.getClass().getAnnotation(Aop.class);
-        // 如果未添加注解，则关闭Aop功能
-        if ((mEnabled = null != config)) {
-            mPkg = config.value();
-
-            // 子线程，执行一些耗时操作
-            new Thread() {
-                @Override
-                public void run() {
-                    List<Class<? extends OnAopExitListener>> listeners = AopUtils.getImplementations(mApp, mPkg, OnAopExitListener.class);
-                    if (null != listeners && !listeners.isEmpty()) {
-                        mExitListenerList = new ArrayList<>();
-                        for (Class<? extends OnAopExitListener> listener : listeners) {
-                            if (listener.isInterface() || Modifier.isAbstract(listener.getModifiers())) {
-                                continue;
-                            }
-                            try {
-                                mExitListenerList.add(listener.newInstance());
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            } catch (InstantiationException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            }.start();
-        }
     }
 
     /**

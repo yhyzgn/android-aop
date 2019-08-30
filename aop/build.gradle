@@ -5,11 +5,11 @@ apply plugin: 'plugin-aspectj'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -27,17 +27,17 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha05'
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0-beta01'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-beta01'
+    androidTestImplementation 'androidx.test:runner:1.3.0-alpha02'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
 }
 
 publish {
     userOrg = 'yhyzgn'
     groupId = 'com.yhy.aop'
     artifactId = 'aop-core'
-    publishVersion = '1.0.5'
+    publishVersion = '1.0.6'
     desc = 'Android aop.'
-    website = 'https://github.com/yhyzgn/Aop'
+    website = 'https://github.com/yhyzgn/AopClick'
 }

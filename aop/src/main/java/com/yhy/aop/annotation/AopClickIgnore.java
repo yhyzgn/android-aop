@@ -10,22 +10,13 @@ import java.lang.annotation.Target;
 /**
  * author : 颜洪毅
  * e-mail : yhyzgn@gmail.com
- * time   : 2019-04-05 18:53
+ * time   : 2019-08-30 17:10
  * version: 1.0.0
- * desc   : 开启Aop功能，并配置 Aop相关的 packageName
+ * desc   : 忽略连续点击处理
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ElementType.METHOD})
 @Inherited
 @Documented
-public @interface Aop {
-
-    /**
-     * packageName
-     * <p>
-     * 配置此项能提高Aop效率
-     *
-     * @return packageName
-     */
-    String value() default "";
+public @interface AopClickIgnore {
 }

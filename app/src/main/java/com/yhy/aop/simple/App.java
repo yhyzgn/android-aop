@@ -4,7 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.yhy.aop.AopHelper;
-import com.yhy.aop.annotation.Aop;
+import com.yhy.aop.annotation.AopClick;
 
 /**
  * author : 颜洪毅
@@ -13,7 +13,7 @@ import com.yhy.aop.annotation.Aop;
  * version: 1.0.0
  * desc   :
  */
-@Aop("com.yhy.aop.simple.aop")
+@AopClick
 public class App extends Application {
 
     @Override
