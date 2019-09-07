@@ -19,6 +19,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        AOP.init(this).debug(true);
+        AOP.init(this).main(MainActivity.class).debug(true);
     }
 }

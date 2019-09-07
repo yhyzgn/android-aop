@@ -15,23 +15,37 @@ import org.aspectj.lang.annotation.Pointcut;
  * e-mail : yhyzgn@gmail.com
  * time   : 2019-09-07 23:03
  * version: 1.0.0
- * desc   :
+ * desc   : 点击抖动处理器
  */
 @Aspect
 public class ClickHandler {
 
+    /**
+     * 普通的点击事件
+     */
     @Pointcut("execution(* android.view.View.OnClickListener.onClick(..))")
     public void click() {
     }
 
+    /**
+     * Lambda点击事件
+     */
     @Pointcut("execution(* *..lambda*(..))")
     public void clickLambda() {
     }
 
+    /**
+     * ButterKnife点击事件
+     */
     @Pointcut("execution(* butterknife.internal.DebouncingOnClickListener.doClick(..))")
     public void butterKnife() {
     }
 
+    /**
+     * 切面处理
+     *
+     * @param point 切点
+     */
     @Around("click() || clickLambda() || butterKnife()")
     public void handle(ProceedingJoinPoint point) {
         try {

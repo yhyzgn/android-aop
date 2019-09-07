@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_click"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="单击" />
+        android:padding="16dp"
+        android:text="单击"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_click_ignore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="忽略"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_click_lambda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="拉姆达"
+        android:textSize="16sp" />
 
 </LinearLayout>

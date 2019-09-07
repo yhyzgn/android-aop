@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * e-mail : yhyzgn@gmail.com
  * time   : 2019-09-08 0:01
  * version: 1.0.0
- * desc   :
+ * desc   : 点击抖动处理被忽略
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
