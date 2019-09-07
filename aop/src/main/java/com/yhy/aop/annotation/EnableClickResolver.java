@@ -10,22 +10,15 @@ import java.lang.annotation.Target;
 /**
  * author : 颜洪毅
  * e-mail : yhyzgn@gmail.com
- * time   : 2019-04-05 18:53
+ * time   : 2019-09-07 23:23
  * version: 1.0.0
- * desc   : 开启Aop功能，并配置 Aop相关的 packageName
+ * desc   :
  */
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-@Inherited
 @Documented
-public @interface Aop {
+@Inherited
+public @interface EnableClickResolver {
 
-    /**
-     * packageName
-     * <p>
-     * 配置此项能提高Aop效率
-     *
-     * @return packageName
-     */
-    String value() default "";
+    long value() default 1000;
 }

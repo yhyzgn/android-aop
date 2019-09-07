@@ -1,18 +1,33 @@
 package com.yhy.aop.simple;
 
 import android.os.Bundle;
-
-import com.yhy.aop.annotation.ExitSticker;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-@ExitSticker
 public class MainActivity extends AppCompatActivity {
+
+    private TextView tvClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tvClick = findViewById(R.id.tv_click);
+
+//        tvClick.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(MainActivity.this, "hahha", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        tvClick.setOnClickListener(v -> {
+            Toast.makeText(this, "lambda", Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override

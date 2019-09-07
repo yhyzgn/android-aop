@@ -10,20 +10,13 @@ import java.lang.annotation.Target;
 /**
  * author : 颜洪毅
  * e-mail : yhyzgn@gmail.com
- * time   : 2019-03-25 11:11
+ * time   : 2019-09-08 0:01
  * version: 1.0.0
- * desc   : 返回退出应用提示
+ * desc   :
  */
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
-@Inherited
 @Documented
-public @interface ExitSticker {
-
-    /**
-     * 连续返回的有效时间间隔，默认3s
-     *
-     * @return 有效时间间隔
-     */
-    long value() default 3000;
+@Inherited
+public @interface ClickIgnored {
 }

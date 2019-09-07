@@ -1,10 +1,9 @@
 package com.yhy.aop.simple;
 
 import android.app.Application;
-import android.util.Log;
 
-import com.yhy.aop.AopHelper;
-import com.yhy.aop.annotation.Aop;
+import com.yhy.aop.AOP;
+import com.yhy.aop.annotation.EnableClickResolver;
 
 /**
  * author : 颜洪毅
@@ -13,18 +12,13 @@ import com.yhy.aop.annotation.Aop;
  * version: 1.0.0
  * desc   :
  */
-@Aop("com.yhy.aop.simple.aop")
+@EnableClickResolver(3000)
 public class App extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        AopHelper.getInstance().init(this, BuildConfig.DEBUG).logger(new AopHelper.Logger() {
-            @Override
-            public void log(String msg) {
-                Log.i("App", msg);
-            }
-        });
+        AOP.init(this).debug(true);
     }
 }
