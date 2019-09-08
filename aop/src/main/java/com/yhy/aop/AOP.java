@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.yhy.aop.annotation.MainBackResolver;
+import com.yhy.aop.utils.Utils;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -126,30 +127,24 @@ public class AOP {
          */
         private Config(Application app) {
             aop = new AOP(app);
-            // 默认logger，动态代理获取
-            aop.logger = proxyLogger();
+            init();
         }
 
-        /**
-         * 主页面类，用于防退出处理
-         *
-         * @param main 主页面类
-         * @return 当前配置对象
-         */
-        public Config main(Class<? extends Activity> main) {
-            // 主页面类中  必须重写onBackPressed()方法
-            try {
-                main.getDeclaredMethod("onBackPressed");
-            } catch (NoSuchMethodException e) {
-                throw new IllegalStateException("Your Activity '" + main.getName() + "' must override the method 'onBackPressed().'");
-            }
-            // 是否被 @MainBackResolver 注解，因为需要从注解中获取相关信息
-            MainBackResolver resolver = main.getAnnotation(MainBackResolver.class);
-            if (null == resolver) {
-                throw new IllegalStateException("Must annotate class '" + main.getName() + "' with @MainBackResolver.");
+        private void init() {
+            // 默认logger，动态代理获取
+            aop.logger = proxyLogger();
+
+            // 查找防退出页面
+            Class<? extends Activity> main = Utils.annotatedActivity(aop.app, MainBackResolver.class);
+            if (null != main) {
+                // 如果设置了防退出注解，就检查其合法性（必须重写‘onBackPressed()’方法）
+                try {
+                    main.getDeclaredMethod("onBackPressed");
+                } catch (NoSuchMethodException e) {
+                    throw new IllegalStateException("Your main back activity '" + main.getName() + "' must override the method 'onBackPressed().'");
+                }
             }
             aop.main = main;
-            return this;
         }
 
         /**

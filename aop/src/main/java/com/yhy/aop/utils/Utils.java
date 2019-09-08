@@ -1,6 +1,11 @@
 package com.yhy.aop.utils;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.util.SparseArray;
 import android.view.View;
 
@@ -14,6 +19,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * author : 颜洪毅
@@ -22,6 +29,7 @@ import java.lang.reflect.Method;
  * version: 1.0.0
  * desc   : 工具类
  */
+@SuppressWarnings("unchecked")
 public class Utils {
     // 记录每个被点击控件的最后点击时间
     private static final SparseArray<Long> VIEW_CLICK_TIME_HISTORY = new SparseArray<>();
@@ -101,6 +109,73 @@ public class Utils {
                 MethodSignature ms = (MethodSignature) st;
                 return ms.getMethod();
             }
+        }
+        return null;
+    }
+
+    /**
+     * 获取被注解的Activity
+     *
+     * @param context    上下文
+     * @param annotation 注解
+     * @return Activity类
+     */
+    public static Class<? extends Activity> annotatedActivity(Context context, Class<? extends Annotation> annotation) {
+        try {
+            PackageInfo info = context.getApplicationContext().getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+            if (null != info.activities && info.activities.length > 0) {
+                Class<?> clazz;
+                for (ActivityInfo ai : info.activities) {
+                    clazz = Class.forName(ai.name);
+                    if (Activity.class.isAssignableFrom(clazz) && isAnnotationPresent(clazz, annotation)) {
+                        return (Class<? extends Activity>) clazz;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取已注册的Activity列表
+     *
+     * @param context 上下文
+     * @return activity列表
+     */
+    public static List<Class<? extends Activity>> registeredActivities(Context context) {
+        List<Class<? extends Activity>> result = new ArrayList<>();
+        try {
+            PackageInfo info = context.getApplicationContext().getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+            if (null != info.activities && info.activities.length > 0) {
+                Class<?> clazz;
+                for (ActivityInfo ai : info.activities) {
+                    clazz = Class.forName(ai.name);
+                    if (Activity.class.isAssignableFrom(clazz)) {
+                        result.add((Class<? extends Activity>) clazz);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 获取当前应用包名
+     *
+     * @param context 上下文
+     * @return 包名
+     */
+    public static String packageName(Context context) {
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.packageName;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }

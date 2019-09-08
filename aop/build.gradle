@@ -37,7 +37,7 @@ publish {
     userOrg = 'yhyzgn'
     groupId = 'com.yhy.aop'
     artifactId = 'aop-core'
-    publishVersion = '1.1.0'
+    publishVersion = '1.2.0'
     desc = 'Android aop.'
     website = 'https://github.com/yhyzgn/Aop'
 }

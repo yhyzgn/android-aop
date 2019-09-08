@@ -44,41 +44,43 @@ public class BackHandler {
     @Around("back()")
     public void handle(ProceedingJoinPoint point) {
         Class<? extends Activity> main = AOP.main();
-        if (null == main) {
-            throw new IllegalStateException("Must set main page class like 'MainActivity.class' which back stick page, using 'AOP.main(Class main)'.");
-        }
-
-        MainBackResolver resolver = main.getAnnotation(MainBackResolver.class);
-        if (null == resolver) {
-            throw new IllegalStateException("Must annotate class '" + main.getName() + "' with @MainBackResolver.");
-        }
-
-        long now = System.currentTimeMillis();
-        if (now - last <= resolver.interval()) {
-            try {
-                point.proceed();
+        if (null != main && point.getTarget().getClass() == AOP.main()) {
+            // 切点切到主页
+            MainBackResolver resolver = main.getAnnotation(MainBackResolver.class);
+            if (null != resolver) {
+                long now = System.currentTimeMillis();
+                if (now - last <= resolver.interval()) {
+                    try {
+                        point.proceed();
+                        return;
+                    } catch (Throwable ignored) {
+                    }
+                }
+                // 不在间隔之内，不允许退出，提示再按一次退出
+                Class<? extends OnBackCallback> callback = resolver.callback();
+                OnBackCallback caller = null;
+                if (callback == OnBackCallback.class) {
+                    // 默认值，用动态代理
+                    caller = proxyCaller();
+                } else {
+                    // 自定义了回调
+                    try {
+                        caller = callback.getConstructor().newInstance();
+                    } catch (Exception e) {
+                        // 还是得用动态代理
+                        caller = proxyCaller();
+                    }
+                }
+                caller.callback((Context) point.getTarget(), resolver.value());
+                // 保存最新操作时间，退出
+                last = now;
                 return;
-            } catch (Throwable ignored) {
             }
         }
-        // 不在间隔之内，不允许退出，提示再按一次退出
-        Class<? extends OnBackCallback> callback = resolver.callback();
-        OnBackCallback caller = null;
-        if (callback == OnBackCallback.class) {
-            // 默认值，用动态代理
-            caller = proxyCaller();
-        } else {
-            // 自定义了回调
-            try {
-                caller = callback.getConstructor().newInstance();
-            } catch (Exception e) {
-                // 还是得用动态代理
-                caller = proxyCaller();
-            }
+        try {
+            point.proceed();
+        } catch (Throwable ignored) {
         }
-        caller.callback((Context) point.getTarget(), resolver.value());
-        // 保存最新操作时间，退出
-        last = now;
     }
 
     /**
