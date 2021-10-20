@@ -1,4 +1,4 @@
-package com.yhy.aop.handler;
+package com.yhy.aop.aspect;
 
 import android.view.View;
 
@@ -18,7 +18,7 @@ import org.aspectj.lang.annotation.Pointcut;
  * desc   : 点击抖动处理器
  */
 @Aspect
-public class ClickHandler {
+public class ClickAspect {
 
     /**
      * 普通的点击事件

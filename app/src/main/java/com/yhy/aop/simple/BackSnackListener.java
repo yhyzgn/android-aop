@@ -1,9 +1,10 @@
 package com.yhy.aop.simple;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.yhy.aop.callback.OnBackCallback;
+import com.yhy.aop.resolver.BackSnackResolver;
 
 /**
  * author : 颜洪毅
@@ -12,10 +13,11 @@ import com.yhy.aop.callback.OnBackCallback;
  * version: 1.0.0
  * desc   :
  */
-public class OnBackListener implements OnBackCallback {
+public class BackSnackListener implements BackSnackResolver {
 
     @Override
-    public void callback(Context context, String message) {
+    public void onBack(Context context, String message) {
+        Log.i("BackSnackListener", message);
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

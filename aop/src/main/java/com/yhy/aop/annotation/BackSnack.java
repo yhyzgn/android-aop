@@ -1,6 +1,6 @@
 package com.yhy.aop.annotation;
 
-import com.yhy.aop.callback.OnBackCallback;
+import com.yhy.aop.resolver.BackSnackResolver;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface MainBackResolver {
+public @interface BackSnack {
 
     /**
      * 提示信息
@@ -41,5 +41,5 @@ public @interface MainBackResolver {
      *
      * @return 提示处理类
      */
-    Class<? extends OnBackCallback> callback() default OnBackCallback.class;
+    Class<? extends BackSnackResolver> resolver() default BackSnackResolver.class;
 }

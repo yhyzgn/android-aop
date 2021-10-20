@@ -1,20 +1,18 @@
-package com.yhy.aop.handler;
+package com.yhy.aop.aspect;
 
 import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
 import com.yhy.aop.AOP;
-import com.yhy.aop.annotation.MainBackResolver;
-import com.yhy.aop.callback.OnBackCallback;
+import com.yhy.aop.annotation.BackSnack;
+import com.yhy.aop.resolver.BackSnackResolver;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
@@ -25,14 +23,14 @@ import java.lang.reflect.Proxy;
  * desc   : 防退出主页处理器
  */
 @Aspect
-public class BackHandler {
+public class BackAspect {
 
     private volatile long last;
 
     /**
      * *Activity必须重写onBackPressed()方法
      */
-    @Pointcut("execution(* *..*Activity+.onBackPressed())")
+    @Pointcut("execution(void *..*Activity+.onBackPressed())")
     public void back() {
     }
 
@@ -46,7 +44,7 @@ public class BackHandler {
         Class<? extends Activity> main = AOP.main();
         if (null != main && point.getTarget().getClass() == AOP.main()) {
             // 切点切到主页
-            MainBackResolver resolver = main.getAnnotation(MainBackResolver.class);
+            BackSnack resolver = main.getAnnotation(BackSnack.class);
             if (null != resolver) {
                 long now = System.currentTimeMillis();
                 if (now - last <= resolver.interval()) {
@@ -57,9 +55,9 @@ public class BackHandler {
                     }
                 }
                 // 不在间隔之内，不允许退出，提示再按一次退出
-                Class<? extends OnBackCallback> callback = resolver.callback();
-                OnBackCallback caller = null;
-                if (callback == OnBackCallback.class) {
+                Class<? extends BackSnackResolver> callback = resolver.resolver();
+                BackSnackResolver caller = null;
+                if (callback == BackSnackResolver.class) {
                     // 默认值，用动态代理
                     caller = proxyCaller();
                 } else {
@@ -71,7 +69,7 @@ public class BackHandler {
                         caller = proxyCaller();
                     }
                 }
-                caller.callback((Context) point.getTarget(), resolver.value());
+                caller.onBack((Context) point.getTarget(), resolver.value());
                 // 保存最新操作时间，退出
                 last = now;
                 return;
@@ -88,15 +86,13 @@ public class BackHandler {
      *
      * @return 代理对象
      */
-    private OnBackCallback proxyCaller() {
-        return (OnBackCallback) Proxy.newProxyInstance(OnBackCallback.class.getClassLoader(), new Class<?>[]{OnBackCallback.class}, new InvocationHandler() {
-            @Override
-            public Object invoke(Object o, Method method, Object[] args) {
-                Context context = (Context) args[0];
-                String message = (String) args[1];
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                return null;
-            }
+    @SuppressWarnings("SuspiciousInvocationHandlerImplementation")
+    private BackSnackResolver proxyCaller() {
+        return (BackSnackResolver) Proxy.newProxyInstance(BackSnackResolver.class.getClassLoader(), new Class<?>[]{BackSnackResolver.class}, (o, method, args) -> {
+            Context context = (Context) args[0];
+            String message = (String) args[1];
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            return null;
         });
     }
 }

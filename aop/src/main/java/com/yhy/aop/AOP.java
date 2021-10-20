@@ -7,7 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.yhy.aop.annotation.MainBackResolver;
+import com.yhy.aop.annotation.BackSnack;
 import com.yhy.aop.utils.Utils;
 
 import java.lang.reflect.InvocationHandler;
@@ -135,7 +135,7 @@ public class AOP {
             aop.logger = proxyLogger();
 
             // 查找防退出页面
-            Class<? extends Activity> main = Utils.annotatedActivity(aop.app, MainBackResolver.class);
+            Class<? extends Activity> main = Utils.annotatedActivity(aop.app, BackSnack.class);
             if (null != main) {
                 // 如果设置了防退出注解，就检查其合法性（必须重写‘onBackPressed()’方法）
                 try {

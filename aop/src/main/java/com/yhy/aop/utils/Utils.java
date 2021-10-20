@@ -10,8 +10,8 @@ import android.util.SparseArray;
 import android.view.View;
 
 import com.yhy.aop.AOP;
-import com.yhy.aop.annotation.ClickIgnored;
-import com.yhy.aop.annotation.EnableClickResolver;
+import com.yhy.aop.annotation.ClickAntiShakeIgnored;
+import com.yhy.aop.annotation.EnableClickAntiShake;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -50,7 +50,7 @@ public class Utils {
         // 不是第一次点击
         if (null != last && last > 0) {
             Application app = AOP.app();
-            EnableClickResolver resolver = app.getClass().getAnnotation(EnableClickResolver.class);
+            EnableClickAntiShake resolver = app.getClass().getAnnotation(EnableClickAntiShake.class);
             if (null != resolver) {
                 long interval = resolver.value();
                 if (now - last <= interval) {
@@ -72,7 +72,7 @@ public class Utils {
      */
     public static boolean clickIgnored(ProceedingJoinPoint point) {
         Method method = joinedMethod(point);
-        return null != method && method.isAnnotationPresent(ClickIgnored.class);
+        return null != method && method.isAnnotationPresent(ClickAntiShakeIgnored.class);
     }
 
     /**
@@ -82,7 +82,7 @@ public class Utils {
      */
     public static boolean clickResolverEnabled() {
         Application app = AOP.app();
-        return isAnnotationPresent(app.getClass(), EnableClickResolver.class);
+        return isAnnotationPresent(app.getClass(), EnableClickAntiShake.class);
     }
 
     /**

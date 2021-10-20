@@ -3,7 +3,7 @@ package com.yhy.aop.simple;
 import android.app.Application;
 
 import com.yhy.aop.AOP;
-import com.yhy.aop.annotation.EnableClickResolver;
+import com.yhy.aop.annotation.EnableClickAntiShake;
 
 /**
  * author : 颜洪毅
@@ -12,7 +12,7 @@ import com.yhy.aop.annotation.EnableClickResolver;
  * version: 1.0.0
  * desc   :
  */
-@EnableClickResolver(3000)
+@EnableClickAntiShake(3000)
 public class App extends Application {
 
     @Override

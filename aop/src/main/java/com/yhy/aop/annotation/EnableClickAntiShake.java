@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface EnableClickResolver {
+public @interface EnableClickAntiShake {
 
     /**
      * 防抖动间隔时长，默认1s

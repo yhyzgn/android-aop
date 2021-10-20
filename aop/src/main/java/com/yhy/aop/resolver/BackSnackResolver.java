@@ -1,4 +1,4 @@
-package com.yhy.aop.callback;
+package com.yhy.aop.resolver;
 
 import android.content.Context;
 
@@ -9,7 +9,8 @@ import android.content.Context;
  * version: 1.0.0
  * desc   : 防退出提示回调
  */
-public interface OnBackCallback {
+@FunctionalInterface
+public interface BackSnackResolver {
 
     /**
      * 回调方法
@@ -17,5 +18,5 @@ public interface OnBackCallback {
      * @param context 上下文
      * @param message 提示消息
      */
-    void callback(Context context, String message);
+    void onBack(Context context, String message);
 }
